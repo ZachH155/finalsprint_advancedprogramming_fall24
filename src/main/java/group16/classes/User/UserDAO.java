@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAO {
-
+    public boolean connectionStatus;
 
     public void addUser(User user) throws SQLException {
         String sql = "INSERT INTO users(username, password, email, role) VALUES (?, ?, ?, ?)";
@@ -20,10 +20,16 @@ public class UserDAO {
             statement.setString(4, user.getRole());
 
             statement.executeUpdate();
+
+            connectionStatus = true;
         } catch (Exception e) {
             System.err.println("Database connection failed");
+            connectionStatus = false;
+
         }
     }
+
+    
 
     public List<User> getAll() throws SQLException {
         // TODO Auto-generated method stub

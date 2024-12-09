@@ -1,6 +1,7 @@
 package group16.classes.User;
 
 import java.sql.SQLException;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserService {
     
@@ -17,9 +18,15 @@ public class UserService {
             return false;
         }
 
-        User newUser = new User(user.getUsername(), user.getPassword(), user.getEmail(), user.getRole());
+        String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+
+        User newUser = new User(user.getUsername(), hashPassword, user.getEmail(), user.getRole());
         DAO.addUser(newUser);
-        System.out.println("Account registered!");
+
+        if (DAO.connectionStatus == true) {
+            System.out.println("Account registered!");
+        }
+        
         return true;
     }
 

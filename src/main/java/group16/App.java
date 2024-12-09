@@ -4,9 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import group16.classes.User.User;
-import group16.classes.User.UserDAO;
 import group16.classes.User.UserService;
-import group16.classes.User.DatabaseConnection;
 
 
 public class App 
@@ -65,7 +63,7 @@ public class App
             System.out.println("Enter email");
             user.setEmail(scanner.nextLine());
 
-            //connection
+            //Database connection
             userService.addUser(user);
 
 
