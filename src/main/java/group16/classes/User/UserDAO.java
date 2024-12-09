@@ -1,13 +1,28 @@
 package group16.classes.User;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAO {
 
-    public User get(String username) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+
+    public void addUser(User user) throws SQLException {
+        String sql = "INSERT INTO users(username, password, email, role) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getRole());
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("Database connection failed");
+        }
     }
 
     public List<User> getAll() throws SQLException {

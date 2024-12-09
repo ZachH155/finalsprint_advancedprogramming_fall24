@@ -1,16 +1,20 @@
 package group16;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import group16.classes.User.User;
+import group16.classes.User.UserDAO;
+import group16.classes.User.UserService;
+import group16.classes.User.DatabaseConnection;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
-    public static void main( String[] args )
+    private static UserService userService = new UserService();
+
+    //static final String ADMINPASS = "admin1234";
+    public static void main( String[] args ) throws SQLException
     {
         //Main menu
         System.out.println("___________________________________________________");
@@ -30,25 +34,47 @@ public class App
 
         //checks for valid user input
         try {
-                userInputInt = Integer.parseInt(userInput);
-
-                if (userInputInt > 3 || userInputInt < 1) {
-                    System.out.print("");
-                    System.err.println(userInputInt + " is not an option, enter one of the given options");
-                }
-        } catch (Exception error) {
-            System.out.print("");
+            userInputInt = Integer.parseInt(userInput);
+        } catch (Exception e) {
             System.err.println("Must input a number");
         }
 
 
         //runs code based on user input
         if (userInputInt == 1) {
-            //UserService
+            //WIP
         } else if (userInputInt == 2) {
-            //UserService
+            //WIP
+
+            //user creation
+            User user = new User();
+
+            System.out.println("___________________________________________________");
+            System.out.println();
+
+            System.out.println("Set role");
+            System.out.println("Buyer, Seller, or Admin");
+            user.setRole(scanner.nextLine());
+
+            System.out.println("Enter username");
+            user.setUsername(scanner.nextLine());
+
+            System.out.println("Enter password");
+            user.setPassword(scanner.nextLine());
+
+            System.out.println("Enter email");
+            user.setEmail(scanner.nextLine());
+
+            //connection
+            userService.addUser(user);
+
+
+
+
         } else if (userInputInt == 3) {
             System.exit(0);
+        } else {
+            System.out.println("Choose one of the avalible numbers");
         }
         
         scanner.close();

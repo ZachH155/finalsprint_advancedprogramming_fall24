@@ -4,12 +4,21 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String role;
     
-    //constructor
-    public User(String username, String password, String email) {
+    //constructors
+    public User() {
+        username = "Tempname";
+        password = "Temppass";
+        email = "Tempemail";
+        role = "none";
+    }
+
+    public User(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     //getters and setters
@@ -35,10 +44,17 @@ public class User {
         this.email = email;
     }
 
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         
-        return "U:" + username + " P:" + password + " E:" + email;
+        return "U:" + username + " P:" + password + " E:" + email + " R:" + role;
     }
 }
 
