@@ -8,10 +8,10 @@ import group16.classes.User.UserService;
 
 
 public class App 
-{
+{   
+    public static User loggedUser = new User();
     private static UserService userService = new UserService();
 
-    //static final String ADMINPASS = "admin1234";
     public static void main( String[] args ) throws SQLException
     {
         //Main menu
@@ -40,14 +40,35 @@ public class App
 
         //runs code based on user input
         if (userInputInt == 1) {
-            //WIP
+
+            //user login
+            System.out.println("___________________________________________________");
+            System.out.println("User Login");
+            System.out.println();
+
+            System.out.println("Enter username");
+            String username = scanner.nextLine();
+            
+            System.out.println("Enter password");
+            String password = scanner.nextLine();
+
+
+            if (userService.DAO.loginSuccess == true) {
+                
+                loggedUser = userService.getUser(username, password);
+
+                System.out.println("Login successful");
+            }
+        
+
+
         } else if (userInputInt == 2) {
-            //WIP
 
             //user creation
             User user = new User();
 
             System.out.println("___________________________________________________");
+            System.out.println("User Regestration");
             System.out.println();
 
             System.out.println("Set role");
@@ -74,8 +95,9 @@ public class App
         } else {
             System.out.println("Choose one of the avalible numbers");
         }
-        
+            
         scanner.close();
+        
     }
             
 }

@@ -5,17 +5,17 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class UserService {
     
-    UserDAO DAO = new UserDAO();
+    public UserDAO DAO = new UserDAO();
 
     //constructor
     public UserService() {
         DAO = new UserDAO();
     }
 
-    //method
-    public boolean addUser(User user) throws SQLException {
+    //methods
+    public void addUser(User user) throws SQLException {
         if (user.equals(null)) {
-            return false;
+            System.out.println("User obj null");
         }
 
         String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
@@ -26,8 +26,15 @@ public class UserService {
         if (DAO.connectionStatus == true) {
             System.out.println("Account registered!");
         }
-        
-        return true;
     }
 
+    public User getUser(String username, String password) throws SQLException {
+        if (username.equals(null) || password.equals(null)) {
+            System.out.println("Enter a username and password");
+        }
+
+
+        return DAO.getUser(username, password);
+
+    }
 }
