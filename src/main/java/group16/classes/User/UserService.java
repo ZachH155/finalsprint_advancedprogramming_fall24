@@ -1,7 +1,10 @@
 package group16.classes.User;
 
 import java.sql.SQLException;
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
+
 
 public class UserService {
     
@@ -33,8 +36,11 @@ public class UserService {
             System.out.println("Enter a username and password");
         }
 
-
         return DAO.getUser(username, password);
 
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        return DAO.getAllUsers();
     }
 }

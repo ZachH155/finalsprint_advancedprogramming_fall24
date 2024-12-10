@@ -3,13 +3,14 @@ package group16.classes.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UserDAO {
     public boolean connectionStatus;
-    public boolean loginSuccess;
+    public boolean loginSuccess = false;
 
     public void addUser(User user) throws SQLException {
         String sql = "INSERT INTO users(username, password, email, role) VALUES (?, ?, ?, ?)";
@@ -44,12 +45,9 @@ public class UserDAO {
             connectionStatus = true;
 
             
-            
             while (result.next()) {
                 if (result.getString("username").equals(username) 
                 && BCrypt.checkpw(password, result.getString("password")) == true) {
-                    System.out.println();
-                    System.out.println("Successful login");
                     loginSuccess = true;
 
                     loggedUser = new User(result.getString("username"), 
@@ -58,7 +56,7 @@ public class UserDAO {
                     result.getString("role"));
 
                     break;
-                }
+                } 
             }
                 
                 
@@ -87,7 +85,32 @@ public class UserDAO {
     }
     
     public List<User> getAllUsers() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        String sql = "SELECT * FROM users";
+        List<User> userList = new ArrayList<User>();
+        
+        try (Connection connection = DatabaseConnection.getConnection();) {
+            var statement = connection.createStatement();
+            var result = statement.executeQuery(sql);
+
+            connectionStatus = true;
+
+            //creates list and adds all users to it as User class
+            User listUser = new User();
+            while (result.next()) {
+                listUser = new User(result.getString("username"),
+                result.getString("password"),
+                result.getString("email"),
+                result.getString("role"));
+
+                userList.add(listUser);
+            }
+
+            return userList;
+
+        } catch (Exception e) {
+            connectionStatus = false;
+        }
+
+        return userList;
     }
 }
